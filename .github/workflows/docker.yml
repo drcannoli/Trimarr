@@ -19,7 +19,7 @@ jobs:
 
       - id: version
         run: |
-          TAG="${{ github.event.release.tag_name || github.event.inputs.version }}"
+          TAG="${{ github.event.inputs.version }}"
           echo "version=${TAG#v}" >> $GITHUB_OUTPUT
 
       - uses: docker/setup-buildx-action@v3
