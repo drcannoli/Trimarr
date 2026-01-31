@@ -3,14 +3,14 @@ import httpx
 from typing import Any
 
 
-TRIMMARR_TAG_PATTERNS = [
-    (re.compile(r"^trimmarr_retain_(\d+)_seasons?$", re.I), "seasons"),
-    (re.compile(r"^trimmarr_retain_(\d+)_episodes?$", re.I), "episodes"),
+TRIMARR_TAG_PATTERNS = [
+    (re.compile(r"^trimarr_retain_(\d+)_seasons?$", re.I), "seasons"),
+    (re.compile(r"^trimarr_retain_(\d+)_episodes?$", re.I), "episodes"),
 ]
 
 
 def parse_retention_from_tag(tag_label: str) -> tuple[str, int] | None:
-    for pattern, mode in TRIMMARR_TAG_PATTERNS:
+    for pattern, mode in TRIMARR_TAG_PATTERNS:
         m = pattern.match(tag_label.strip())
         if m:
             return (mode, int(m.group(1)))
@@ -128,7 +128,7 @@ class SonarrClient:
         return out
 
     @staticmethod
-    def filter_series_with_trimmarr_tags(
+    def filter_series_with_trimarr_tags(
         series: list[dict[str, Any]],
         tags: list[dict[str, Any]],
         monitored_only: bool = True,

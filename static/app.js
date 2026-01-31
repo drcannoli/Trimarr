@@ -66,7 +66,7 @@ async function loadSeries() {
   tableWrap.classList.add("hidden");
 
   try {
-    const data = await api("/api/trimmarr-series");
+    const data = await api("/api/trimarr-series");
     seriesData = data.series || [];
 
     if (seriesData.length === 0) {

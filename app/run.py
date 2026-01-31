@@ -12,7 +12,7 @@ from .sonarr import (
 async def run_cleanup_once(sonarr: SonarrClient, settings) -> tuple[int, int, int]:
     series = await sonarr.get_series()
     tags = await sonarr.get_tags()
-    filtered = SonarrClient.filter_series_with_trimmarr_tags(series, tags)
+    filtered = SonarrClient.filter_series_with_trimarr_tags(series, tags)
     if not filtered:
         return 0, 0, 0
     total_deleted = 0
@@ -45,7 +45,7 @@ async def run_cleanup_once(sonarr: SonarrClient, settings) -> tuple[int, int, in
 async def main():
     settings = get_settings()
     if not settings.sonarr_api_key:
-        print("TRIMMARR_RUN requires SONARR_API_KEY", file=sys.stderr)
+        print("TRIMARR_RUN requires SONARR_API_KEY", file=sys.stderr)
         sys.exit(1)
     sonarr = SonarrClient(settings.sonarr_url, settings.sonarr_api_key)
     try:

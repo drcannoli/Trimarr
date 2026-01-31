@@ -1,5 +1,5 @@
 services:
-  trimmarr:
+  trimarr:
     image: ghcr.io/drcannoli/trimarr:latest
     ports:
       - "8080:8080"

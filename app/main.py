@@ -29,7 +29,7 @@ async def run_scheduled_cleanup(app: FastAPI):
             sonarr = get_sonarr()
             series = await sonarr.get_series()
             tags = await sonarr.get_tags()
-            filtered = SonarrClient.filter_series_with_trimmarr_tags(series, tags)
+            filtered = SonarrClient.filter_series_with_trimarr_tags(series, tags)
             if not filtered:
                 continue
             effective_dry_run = settings.dry_run
@@ -84,7 +84,7 @@ async def lifespan(app: FastAPI):
         await app.state.sonarr.close()
 
 
-app = FastAPI(title="Trimmarr", lifespan=lifespan)
+app = FastAPI(title="Trimarr", lifespan=lifespan)
 
 LOG_BUFFER: deque[dict] = deque(maxlen=500)
 
@@ -197,15 +197,15 @@ async def proxy_sonarr_image(path: str):
         )
 
 
-@app.get("/api/trimmarr-series")
-async def list_trimmarr_series():
+@app.get("/api/trimarr-series")
+async def list_trimarr_series():
     settings = get_settings()
     sonarr = get_sonarr()
     series = await sonarr.get_series()
     tags = await sonarr.get_tags()
     quality_profiles = await sonarr.get_quality_profiles()
     qp_by_id = {qp["id"]: qp.get("name", "") for qp in quality_profiles}
-    filtered = SonarrClient.filter_series_with_trimmarr_tags(series, tags)
+    filtered = SonarrClient.filter_series_with_trimarr_tags(series, tags)
     result = []
     for s in filtered:
         rule = get_retention_for_series(s, tags)
